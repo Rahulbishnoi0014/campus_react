@@ -117,19 +117,20 @@ const Home = () => {
 
           <div className='box1'>
             {/* <img src={trendicon} className="navbar-toggler " data-toggle="collapse" data-target="#collapsecard1"  aria-controls="collapsecard1" aria-label="Toggle navigation"></img> */}
+            
+            <img src={trendicon}   data-toggle="collapse" data-target="#collapsecard1"  aria-controls="collapsecard1"></img>
+           
             <img src={usericon} data-toggle="collapse" data-target="#collapsecard2"  aria-controls="collapsecard2"></img>
             <img src={statsicon} data-toggle="collapse" data-target="#collapsecard3"  aria-controls="collapsecard3"></img>
             <img src={linksicon} data-toggle="collapse" data-target="#collapsecard4"  aria-controls="collapsecard4"></img>
 
-            <button className="navbar-toggler " type="button"  data-toggle="collapse" data-target="#collapsecard1"  aria-controls="collapsecard1" aria-label="Toggle navigation">
-            <img src={trendicon} ></img>
-            </button>
+            
 
 
           </div>
 
           <div className=''>
-            <div className="collapse show " id="collapsecard1">
+            <div className="collapse " id="collapsecard1">
               <Trending />
             </div>
             <div className="collapse " id="collapsecard2">
