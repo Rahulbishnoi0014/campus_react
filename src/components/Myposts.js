@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import like from "../images/redheart.png";
 import deleteicon from "../images/delete.png"
 
+import Loading from './Loading';
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ReadMore = ({ children }) => {
     const text = children;
@@ -28,7 +33,20 @@ const Myposts = () => {
 
     const [userposts, setuserposts] = useState([]);
 
-    const [err, seterr] = useState("");
+    const [loading, setLoading] = useState(true);
+
+    const tostconfig = {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    const notifyErr = (text) => toast.error(text,tostconfig);
+    const notifySuc = (text) => toast.success(text,tostconfig);
 
     const getData = async () => {
         try {
@@ -46,22 +64,24 @@ const Myposts = () => {
             const userpost = await res.json();
 
 
-
             setuserposts(userpost.reverse());
+            setLoading(false);
 
             if (res.status !== 200) {
                 if (res.status === 401)
                     navigate("/signin");
 
-                seterr("error occur");
+                notifyErr("Failed to Fetch !")
             }
 
 
         }
         catch (err) {
 
-            console.log(err)
-            seterr("error occur");
+            // console.log(err)
+
+            notifyErr("Failed to Fetch !")
+
             navigate("/signin");
 
 
@@ -87,26 +107,23 @@ const Myposts = () => {
                 if (res.status === 401)
                     navigate("/signin");
 
-                seterr("error occur ! cannot delete");
+                notifyErr("Failed to Delete!")
+
             }
             else {
-                console.log("delted");
+                notifySuc("Successfully deleted")
                 getData();
             }
 
 
         }
         catch (err) {
-            console.log(err);
-            seterr("error occur ! cannot delete");
-
-
-
+            notifyErr("Failed to Delete!")
 
         }
     }
 
-
+    
 
     useEffect(() => {
         getData();
@@ -114,17 +131,13 @@ const Myposts = () => {
     }, []);
 
 
+
     return (
         <>
 
-            {/* <p>{err}</p> */}
-
-            {err===""?<></>:<p>{err}</p>}
-
-
             {
                 userposts.map((curr, index) => {
-                    return <div className='userpost borr '>
+                    return <div className='userpost borr ' key={index+"1"}>
                         <p className='time'>{curr.datetime}</p>
 
 
@@ -150,9 +163,16 @@ const Myposts = () => {
                         </div>
 
                         <hr />
+
                     </div>
                 })
             }
+
+            {loading && <Loading/>}
+
+            <ToastContainer/>
+
+
 
 
 

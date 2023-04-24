@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
 import toparrow from "../images/top.png"
+import EventCard from './EventCard';
+import Loading from './Loading';
 
 
 const Events = () => {
@@ -10,10 +12,13 @@ const Events = () => {
     const navigate = useNavigate();
 
     const [event, setevent] = useState([]);
-    const [refreshkey, setrefreshkey] = useState(0);
+    const [admin, setadmin] = useState([]);
+
     const [err, seterr] = useState("");
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(true);
+
 
     const toggleVisible = () => {
         const scrolled = document.documentElement.scrollTop;
@@ -36,9 +41,7 @@ const Events = () => {
 
     window.addEventListener('scroll', toggleVisible);
 
-    setTimeout(() => {
-        setrefreshkey(refreshkey + 1);
-    }, 5000)
+
 
     const getData = async () => {
         try {
@@ -53,15 +56,33 @@ const Events = () => {
                 credentials: "include"
             });
 
-            const eventsdata = await res.json();
+            // console.log(res);
+            setevent(await res.json());
 
-            setevent(eventsdata)
+            const adminuser = await fetch("/isadmin", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+
+                },
+                credentials: "include"
+            });
+
+            const admindata = await adminuser.json();
+
+            // console.log(admindata);
+
+            setadmin(admindata);
+            setLoading(false);
+
+
 
 
             if (res.status !== 200) {
                 if (res.status === 401)
                     navigate("/signin");
-                seterr("cannot get  E V E N T  data");
+                seterr("failed to fetch Event data");
             }
             else {
                 seterr("");
@@ -82,10 +103,39 @@ const Events = () => {
 
     }
 
+    const datetime = (x) => {
+        x = new Date(x);
+
+
+        var hours = x.getUTCHours(),
+            minutes = x.getUTCMinutes(),
+            ampm = 'am';
+
+        if (hours === 12) {
+            ampm = 'pm';
+        } else if (hours === 0) {
+            hours = 12;
+        } else if (hours > 12) {
+            hours -= 12;
+            ampm = 'pm';
+
+            if (minutes < 10) {
+                minutes = "0" + minutes
+
+            }
+        }
+
+
+
+        const datetimestr = x.getUTCDate() + "-" + `${x.getUTCMonth() + 1}` + "-" + x.getUTCFullYear() + " | " + hours + ':' + minutes + ' ' + ampm
+        return datetimestr
+    }
+
     useEffect(() => {
         getData();
     }
-        , [refreshkey]);
+        , []);
+
 
 
     return (
@@ -97,8 +147,11 @@ const Events = () => {
 
                 <div className=' center'>
                     <h1 className='coheading'>E V E N T S</h1>
+
+                    {admin.admin === true ? <Link className='rgb' to={"/addevent"}>Add event</Link> : <p>Contact Admin to add events</p>}
+
                     {err === "" ? <p></p> : <p>{err}</p>}
-                    {event.length > 0 ? <h1></h1> : <h1 className='center'>NO EVENT TO SHOW</h1>}
+                    {event.length > 0 ? null : <h1 className='center'>NO EVENT TO SHOW</h1>}
 
                     <h4 className='coheading1'>T O T A L <br /><span className='rgb'> E V E N T S  : {event.length}</span></h4>
                 </div>
@@ -109,21 +162,17 @@ const Events = () => {
 
                         return (
                             <>
-                                <div key={index} className="eventCard">
+                                <EventCard curr={curr} index={index} datetime={datetime}></EventCard>
+                                
 
-                                    <img src={curr.image} alt="event img"></img>
-
-
-                                    <h1>{curr.name}</h1>
-                                    <p>{curr.discription}</p>
-
-
-                                </div>
                             </>
                         )
 
                     })}
                 </div>
+
+                {loading && <Loading/>}
+
 
 
 

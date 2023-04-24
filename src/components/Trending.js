@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const ReadMore = ({ children }) => {
     const text = children;
     const [isReadMore, setIsReadMore] = useState(true);
@@ -34,6 +37,22 @@ const Trending = () => {
         setrefreshkey(refreshkey+1);
     },3000)
 
+
+    const tostconfig = {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    
+      const notifyErr = (text) => toast.error(text,tostconfig);
+      const notifySuc = (text) => toast.success(text,tostconfig);
+      const notifyWar = (text) => toast.warning(text,tostconfig);
+
     const getData = async () => {
         try {
 
@@ -57,13 +76,15 @@ const Trending = () => {
 
 
             if (res.status !== 200) {
-                if (res.status == 401)
+                if (res.status === 401)
                     navigate("/signin");
             seterr({...err,error:"failed to fetch trending data",iserr:true});
+
+            notifyWar("Failed to fetch Trending List");
             }
+
             else{
                 seterr({...err,error:"",iserr:false});
-
 
             }
 
@@ -74,6 +95,8 @@ const Trending = () => {
 
             console.log(err)
             seterr({...err,error:"failed to fetch trending data",iserr:true});
+            notifyErr("Server Error")
+
 
 
         }
@@ -90,22 +113,26 @@ const Trending = () => {
         
 
         <div className='borr bgcw pad1 martb1'>
+
+            {err.iserr&&<div className='center'><p>{err.err}</p></div>}
             {
-               err.iserr?<p>{err.error}</p>:trend.map((curr,index)=>{
+               trend.map((curr,index)=>{
                     return (
                         <>
-                        <p  className="rgb"><i className="fi fi-rr-arrow-trend-up"></i> <b>Trending #{index+1} ^{curr.like}</b></p>
+                        <p key={index+"!"} className="rgb"><i className="fi fi-rr-arrow-trend-up"></i> <b>Trending #{index+1} ^{curr.like}</b></p>
 
-                            <p key={index} className="padleft1">
+                            <h6  className="padleft1">
                             <ReadMore>
                             {curr.text}
 
                             </ReadMore>
-                            </p>
+                            </h6>
                         </>
                     )
                 }) 
             }
+
+            <ToastContainer/>
         </div>
        
     )

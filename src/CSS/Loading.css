@@ -1,0 +1,191 @@
+
+.circle {
+    /* background-color: rgb(195, 195, 195);  */
+
+    background-color: yellowgreen;
+
+    border-radius: 50%;
+    border: 16px dotted #f3f3f3;
+    border-top: 16px dotted #f3f3f3c0;
+    border-left: 16px dotted #f3f3f345;
+    border-bottom: 16px dotted #f3f3f311;
+
+
+    width: 100px;
+    height: 100px;
+
+    /* animation-name: loading;
+    animation-duration: 1s;
+    transition: linear;
+    animation-iteration-count: infinite; */
+
+    animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+
+
+}
+
+.circle1 {
+    height: 100px;
+    width: 100px;
+
+    border: 16px solid rgba(214, 214, 214, 0.421);
+    border-top: 16px solid rgb(255, 255, 255);
+
+
+    border-radius: 50%;
+
+    animation: 0.5s circle1 linear infinite;
+}
+
+@keyframes circle1 {
+    0% {
+
+        transform: rotate(0deg);
+    }
+
+    100% {
+
+        transform: rotate(360deg);
+    }
+
+}
+
+.riple {
+    height: 120px;
+    width: 120px;
+    position: relative;
+    margin: 20px;
+
+
+}
+
+.riple div {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 10px solid rgb(255, 255, 255);
+    animation: 1s ripleeffect cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.riple div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+
+
+
+@keyframes ripleeffect {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.cube {
+    height: 100px;
+    width: 100px;
+
+    border: 15px solid white;
+
+    animation: 1.5s cube linear infinite;
+
+}
+
+@keyframes cube {
+    0% {
+        border-radius: 0%;
+    }
+
+    50% {
+        border-radius: 50%;
+
+    }
+
+    100% {
+        border-radius: 0%;
+
+        transform: rotate(360deg);
+
+    }
+
+}
+
+.cube1 {
+    height: 100px;
+    width: 100px;
+
+    border: 10px solid white;
+    /* transform: rotate(-45deg); */
+
+    animation: 2.5s cube1 linear infinite;
+
+}
+
+@keyframes cube1 {
+    0% {
+        border-radius: 0%;
+        transform: rotate(-0deg);
+        border-bottom-left-radius: 50%;
+
+        /* transform: translateY(0px); */
+
+
+
+    }
+
+    25% {
+        border-radius: 0%;
+        border-top-left-radius: 50%;
+
+        transform: rotate(-90deg);
+
+        /* transform: translateY(-25px); */
+
+    }
+
+    50% {
+        border-radius: 0%;
+        transform: rotate(-180deg);
+        border-top-right-radius: 50%;
+
+        /* transform: translateY(-50px); */
+
+
+
+    }
+
+    75% {
+        border-radius: 0%;
+        border-bottom-right-radius: 50%;
+        transform: rotate(-270deg);
+
+        /* transform: translateY(-25px); */
+
+
+
+    }
+
+    100% {
+        border-radius: 0%;
+        border-bottom-left-radius: 50%;
+        transform: rotate(-360deg);
+
+        /* transform: translateY(0px); */
+
+    }
+
+}

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Updateuser = (props) => {
 
@@ -11,6 +13,22 @@ const Updateuser = (props) => {
   })
 
   const [err, seterr] = useState("");
+
+
+  const tostconfig = {
+    position: "top-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  }
+
+  const notifyErr = (text) => toast.error(text,tostconfig);
+  const notifySuc = (text) => toast.success(text,tostconfig);
+  const notifyWar = (text) => toast.warning(text,tostconfig);
 
   const handeler = (e) => {
     e.preventDefault();
@@ -40,21 +58,36 @@ const Updateuser = (props) => {
     })
 
     if (res.status !== 200) {
-      if (res.status === 422)
+      if (res.status === 422){
         seterr("Fill all the fields !");
-      else if (res.status === 404)
+
+        notifyWar("Fill all the fields !")
+      
+      }
+      
+      else if (res.status === 404){
         seterr("Not a valid user !");
+        notifyWar("Not a valid user !")
+      
+      }
+
+
 
 
       else {
         console.log(res.status);
         seterr("something went wrong");
+
+        notifyErr("something went wrong !")
+
         navigate("/error");
       }
 
 
     } else {
       seterr("sucessfully U P D A T E D ");
+
+      notifySuc("sucessfully U P D A T E D ");
 
       navigate("/myaccount");
 
@@ -79,13 +112,13 @@ const Updateuser = (props) => {
 
         <div className='flexwrapcentercol'>
 
-          <input type="text" placeholder="Firstname" name="firstname" maxlength="13" minlength="3" value={user.firstname} onChange={handeler} />
+          <input type="text" placeholder="Firstname" name="firstname" maxLength="13" minLength="3" value={user.firstname} onChange={handeler} />
           <input type="text" placeholder="Last Name" name="lastname" value={user.lastname} onChange={handeler} />
 
 
 
           <input type="email" placeholder="Email" name="email" required value={user.email} onChange={handeler} />
-          <input type="tel" placeholder="Phone no." name="phone" maxlength="12" minlength="10" value={user.phone} onChange={handeler} />
+          <input type="tel" placeholder="Phone no." name="phone" maxLength="12" minLength="10" value={user.phone} onChange={handeler} />
 
 
 
@@ -98,6 +131,8 @@ const Updateuser = (props) => {
           </div>
 
         </div>
+
+        <ToastContainer></ToastContainer>
 
       </form>
     </>

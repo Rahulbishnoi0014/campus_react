@@ -26,6 +26,7 @@ import Home from "./components/Home";
 
 import Errorpage from "./components/Errorpage";
 import Logout from "./components/Logout";
+import AddEvent from './components/AddEvent';
 
 
 
@@ -41,6 +42,9 @@ const App = () => {
         <Route path="updateuser" element={<Updateuser/>} />
         <Route path="logout" element={<Logout/>} />
         <Route path="events" element={<Events/>} />
+        <Route path="addevent" element={<AddEvent />} />
+
+
         <Route path="contact" element={<Contact/>} />
         <Route path="feedback" element={<Feedback/>} />
 

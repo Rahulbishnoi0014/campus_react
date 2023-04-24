@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import like from "../images/heartnew.png";
-import nlike from "../images/redheart.png";
+import PostCard from './PostCard';
+import Loading from './Loading';
 
 
-const ReadMore = ({ children }) => {
-    const text = children;
-    const [isReadMore, setIsReadMore] = useState(true);
-    const toggleReadMore = () => {
-        setIsReadMore(!isReadMore);
-    };
-    return (
-        <p className="posttext">
-            {isReadMore ? text.slice(0, 100) : text}
-            {(text.length > 100) ? <span onClick={toggleReadMore} className="read-or-hide">{isReadMore ? "...read more" : " show less"}</span> : <span><br /><br /><br /></span>}
-        </p>
-    );
-};
+
 
 const Allpost = () => {
 
@@ -26,23 +14,26 @@ const Allpost = () => {
     const [posts, setposts] = useState([]);
     const [likes, setlikes] = useState([]);
 
-    // const [liked,setliked]=useState(false);
 
-    const [refreshkey, setrefreshkey] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true);
 
-    setTimeout(() => {
-        setrefreshkey(refreshkey + 1);
-    }, 2000)
+    // const [refreshkey, setrefreshkey] = useState(0);
+
+    // setInterval(()=>{
+    //     setrefreshkey(refreshkey+1);
+    // },5000);
+
 
     const [err, seterr] = useState({
-        error: "", iserr: false
+        error: "", iserr: true
     });
 
 
     const getData = async () => {
         try {
 
-            const res = await fetch("/posts", {
+            const res = await fetch("/posts/" + page, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -54,7 +45,10 @@ const Allpost = () => {
 
             const postData = await res.json();
 
-            setposts(postData);
+            // setposts(postData);
+
+            setposts((prev) => [...prev, ...postData]);
+            setLoading(false);
 
 
 
@@ -128,120 +122,55 @@ const Allpost = () => {
 
     }
 
-    const likepost = async (id) => {
+    const handelInfiniteScroll = async () => {
+        // console.log("scrollHeight" + document.documentElement.scrollHeight);
+        // console.log("innerHeight" + window.innerHeight);
+        // console.log("scrollTop" + document.documentElement.scrollTop);
         try {
-
-            var url = "like/" + id;
-            const res = await fetch(url, {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-
-                },
-                credentials: "include"
-            });
-
-            setrefreshkey(refreshkey + 1);
-            if (res.status !== 200) {
-                if (res.status === 401)
-                    navigate("/signin");
-
-                seterr("error occur ! cannot like");
+            if (
+                window.innerHeight + document.documentElement.scrollTop + 1 >=
+                document.documentElement.scrollHeight
+            ) {
+                setLoading(true);
+                setPage((prev) => prev + 1);
             }
-            else {
-
-                console.log(res.status);
-            }
-
-
+        } catch (error) {
+            console.log(error);
         }
-        catch (err) {
-            console.log(err);
-            seterr("error occur ! cannot delete");
+    };
 
 
-
-
-        }
-    }
-
-    const dislikepost = async (id) => {
-        try {
-
-            var url = "dislike/" + id;
-            const res = await fetch(url, {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-
-                },
-                credentials: "include"
-            });
-
-
-
-            setrefreshkey(refreshkey + 1);
-
-            if (res.status !== 200) {
-                if (res.status === 401)
-                    navigate("/signin");
-
-                seterr("error occur ! cannot like");
-            }
-            else {
-                console.log(res.status);
-            }
-
-
-        }
-        catch (err) {
-            console.log(err);
-            seterr("error occur ! cannot delete");
-
-
-
-
-        }
-    }
+    useEffect(() => {
+        window.addEventListener("scroll", handelInfiniteScroll);
+        return () => window.removeEventListener("scroll", handelInfiniteScroll);
+    }, []);
 
 
     useEffect(() => {
         getData();
         getLikedata();
-    }, [refreshkey]);
+    }, [page])
+
+    
+
     return (
         <div>
             {
-                err.iserr ? <p>{err.error}</p> : posts.map((curr, index) => {
+                posts.map((curr, index) => {
                     return (
                         <>
-                            <div key={index} className='postcard borr bgcw'>
-                                <div className='posttop'>
 
-                                    <p className='time'>{curr.datetime}</p>
-                                    <p className="postuser rgb"><i class="fi fi-rr-incognito"></i> no-body</p>
+                            <PostCard curr={curr} likes={likes} index={index} key={index}>
 
+                            </PostCard>
 
-                                </div>
-                                <hr></hr>
-                                
-                                <ReadMore>
-                                    {curr.text}
-                                </ReadMore>
-
-                                <hr></hr>
-                                <div className='likesec'>
-
-                                    {(likes.indexOf(curr._id) >= 0) ? <img src={nlike} onClick={() => dislikepost(curr._id)} alt="no img" /> : <img src={like} onClick={() => likepost(curr._id)} alt="no img" />}
-                                    <p>{curr.like}</p>
-                                </div>
-                            </div>
                         </>
                     )
                 })
             }
+
+            {loading && <Loading />}
+
         </div>
     )
 }

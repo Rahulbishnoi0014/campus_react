@@ -18,7 +18,7 @@ const Totalpost = () => {
   const getData = async () => {
     try {
 
-      const postdata = await fetch("/posts", {
+      const postdata = await fetch("/postsTotal", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -28,7 +28,7 @@ const Totalpost = () => {
         credentials: "include"
       });
 
-      const userdata = await fetch("/users", {
+      const userdata = await fetch("/usersTotal", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -37,21 +37,25 @@ const Totalpost = () => {
         },
         credentials: "include"
       });
+
 
       const users=await userdata.json();
+
       setusercount(users.count);
 
 
       const postData = await postdata.json();
-      var length = postData.length;
+      
 
-      setpostcount(length);
+      setpostcount(postData.count);
 
 
 
       if (postdata.status !== 200) {
         if (postdata.status === 401)
           navigate("/signin");
+        else
+          seterr("server error")
       }
 
 
@@ -83,9 +87,9 @@ const Totalpost = () => {
         <h6>{err}</h6>
 
     <h4 className='rgb center'>WEBSITE INFO.</h4>
-        <p><b><i class="fi fi-rr-paper-plane"></i> TOTAL POST </b></p>
+        <p><b><i className="fi fi-rr-paper-plane"></i> TOTAL POST </b></p>
         <p className='padleft1'> {postcount}</p>
-        <p><b><i class="fi fi-rr-users"></i> TOTAL USER </b></p>
+        <p><b><i className="fi fi-rr-users"></i> TOTAL USER </b></p>
         <p className='padleft1'>{usercount}</p>
       </div>
 

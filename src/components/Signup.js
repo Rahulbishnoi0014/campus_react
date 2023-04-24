@@ -19,6 +19,7 @@ const Signup = () => {
   });
 
   let [errm, setErrm] = useState("");
+  
 
 
   const handeler = (e) => {
@@ -27,6 +28,9 @@ const Signup = () => {
     let name, value
     name = e.target.name
     value = e.target.value
+
+
+
     console.log(name + " : " + value);
 
     setUser({ ...user, [name]: value })
@@ -113,7 +117,7 @@ const Signup = () => {
               <input type="text" placeholder="Username" name="username" value={user.username} onChange={handeler} maxlength="13" minlength="3" required />
               <input type="password" placeholder="Password" name="password" value={user.password} onChange={handeler} required />
 
-
+      
 
               <div className="flexwrapcenter">
                 {/* <input type="checkbox" onclick="visible()" ><p>Show Password</p></input> */}
