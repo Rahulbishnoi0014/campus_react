@@ -48,7 +48,7 @@ const Updateuser = (props) => {
 
     const { firstname, lastname, email, phone } = user;
 
-    const res = await fetch("/updateUserInfo", {
+    const res = await fetch("https://campusapi-r8xp.onrender.com/updateUserInfo", {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"

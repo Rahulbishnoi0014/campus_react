@@ -33,7 +33,7 @@ const Allpost = () => {
     const getData = async () => {
         try {
 
-            const res = await fetch("/posts/" + page, {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/posts/" + page, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -81,7 +81,7 @@ const Allpost = () => {
     const getLikedata = async () => {
         try {
 
-            const res = await fetch("/userlikes", {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/userlikes", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

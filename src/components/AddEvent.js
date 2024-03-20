@@ -35,7 +35,7 @@ const AddEvent = () => {
 
         const { name, eventby, eventdatestart, eventdateend, eventtimefrom, eventtimeupto, discription } = event;
 
-        const res = await fetch("/addevent", {
+        const res = await fetch("https://campusapi-r8xp.onrender.com/addevent", {
             method: "POST",
             headers: {
                 "Content-Type": "Application/json"

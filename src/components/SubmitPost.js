@@ -56,7 +56,7 @@ const SubmitPost = (props) => {
 
     const { secret } = text;
 
-    const res = await fetch("/submit", {
+    const res = await fetch("https://campusapi-r8xp.onrender.com/submit", {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"

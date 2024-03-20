@@ -56,7 +56,7 @@ const Trending = () => {
     const getData = async () => {
         try {
 
-            const res = await fetch("/trend", {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/trend", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

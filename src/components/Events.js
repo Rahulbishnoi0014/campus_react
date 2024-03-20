@@ -46,7 +46,7 @@ const Events = () => {
     const getData = async () => {
         try {
 
-            const res = await fetch("/events", {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/events", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -59,7 +59,7 @@ const Events = () => {
             // console.log(res);
             setevent(await res.json());
 
-            const adminuser = await fetch("/isadmin", {
+            const adminuser = await fetch("https://campusapi-r8xp.onrender.com/isadmin", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

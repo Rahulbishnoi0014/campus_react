@@ -32,7 +32,7 @@ const PostCard = (props) => {
     const likepost = async (id) => {
         try {
 
-            var url = "like/" + id;
+            var url = "https://campusapi-r8xp.onrender.com/like/" + id;
             const res = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -71,7 +71,7 @@ const PostCard = (props) => {
     const dislikepost = async (id) => {
         try {
 
-            var url = "dislike/" + id;
+            var url = "https://campusapi-r8xp.onrender.com/dislike/" + id;
             const res = await fetch(url, {
                 method: "GET",
                 headers: {

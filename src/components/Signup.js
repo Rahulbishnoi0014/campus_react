@@ -45,7 +45,7 @@ const Signup = () => {
 
     const { firstname, lastname, email, username, phone, password } = user
 
-    const res = await fetch("/signup", {
+    const res = await fetch("https://campusapi-r8xp.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

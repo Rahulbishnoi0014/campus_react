@@ -59,7 +59,7 @@ const Home = () => {
   const getData = async () => {
     try {
 
-      const res = await fetch("/userinfo", {
+      const res = await fetch("https://campusapi-r8xp.onrender.com/userinfo", {
         method: "GET",
         headers: {
           Accept: "application/json",

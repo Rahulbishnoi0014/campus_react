@@ -55,7 +55,7 @@ const Myaccount = () => {
     const getData = async () => {
         try {
 
-            const res = await fetch("/userinfo", {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/userinfo", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -105,7 +105,7 @@ const Myaccount = () => {
             data.append('image', img);
 
             console.log(data);
-            const res = await fetch("/uploadProfilePic", {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/uploadProfilePic", {
 
                 method: 'POST',
                 Accept: 'application/json',

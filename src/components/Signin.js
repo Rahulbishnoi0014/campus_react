@@ -33,7 +33,7 @@ const Signin = () => {
 
     const { username, password } = user;
 
-    const res = await fetch("/signin", {
+    const res = await fetch("https://campusapi-r8xp.onrender.com/signin", {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"

@@ -51,7 +51,7 @@ const Myposts = () => {
     const getData = async () => {
         try {
 
-            const res = await fetch("/myposts", {
+            const res = await fetch("https://campusapi-r8xp.onrender.com/myposts", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -92,7 +92,7 @@ const Myposts = () => {
     const deletepost = async (id) => {
         try {
 
-            var url = "delete/" + id;
+            var url = "https://campusapi-r8xp.onrender.com/delete/" + id;
             const res = await fetch(url, {
                 method: "GET",
                 headers: {

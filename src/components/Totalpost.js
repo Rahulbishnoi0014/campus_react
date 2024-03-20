@@ -18,7 +18,7 @@ const Totalpost = () => {
   const getData = async () => {
     try {
 
-      const postdata = await fetch("/postsTotal", {
+      const postdata = await fetch("https://campusapi-r8xp.onrender.com/postsTotal", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -28,7 +28,7 @@ const Totalpost = () => {
         credentials: "include"
       });
 
-      const userdata = await fetch("/usersTotal", {
+      const userdata = await fetch("https://campusapi-r8xp.onrender.com/usersTotal", {
         method: "GET",
         headers: {
           Accept: "application/json",

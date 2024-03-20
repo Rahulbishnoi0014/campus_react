@@ -6,7 +6,7 @@ const Logout = () => {
 
     const logout = async () => {
        try{
-        const res =await fetch("/logout", {
+        const res =await fetch("https://campusapi-r8xp.onrender.com/logout", {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
