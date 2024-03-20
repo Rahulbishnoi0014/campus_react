@@ -52,7 +52,8 @@ const Signup = () => {
       },
       body: JSON.stringify({
         firstname, lastname, email, username, phone, password
-      })
+      }),
+      credentials: "include"
     });
 
     // console.log(res);
