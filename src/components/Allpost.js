@@ -101,7 +101,7 @@ const Allpost = () => {
 
             if (res.status !== 200) {
                 if (res.status === 401)
-                    navigate("/signin");
+                    navigate("/myaccount");
 
                 seterr({ ...err, error: "failed to fetch data", iserr: true });
             }
