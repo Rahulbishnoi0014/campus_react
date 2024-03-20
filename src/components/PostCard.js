@@ -5,7 +5,7 @@ import nlike from "../images/redheart.png";
 
 import { useNavigate } from 'react-router-dom';
 
-const { generateUsername } = require("unique-username-generator");
+// const { generateUsername } = require("unique-username-generator");
 
 const ReadMore = ({ children }) => {
     const text = children;
@@ -25,7 +25,7 @@ const PostCard = (props) => {
 
     const navigate = useNavigate();
 
-    const [fakeuser, setFakeuser] = useState(generateUsername("_"));
+    // const [fakeuser, setFakeuser] = useState(generateUsername("_"));
 
 
 
@@ -119,7 +119,7 @@ const PostCard = (props) => {
 
 
 
-                    <p className="postuser rgb"><i className="fi fi-rr-portrait postuserimg"></i> {fakeuser}</p>
+                    <p className="postuser rgb"><i className="fi fi-rr-portrait postuserimg"></i> USER X</p>
 
 
                 </div>
